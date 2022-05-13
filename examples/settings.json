@@ -1,0 +1,26 @@
+{
+    "title": "Self service dash",
+    "icon": "icon.png",
+    "mode": "tray",
+    "menu": [
+        {
+            "title": "Help",
+            "type": "link",
+            "action": "https://google.com"
+        },
+        {
+            "title": "Run script",
+            "type": "script",
+            "action": "version"
+        },
+        {
+            "type": "separator"
+        },
+        {
+            "title": "Quit",
+            "icon": "exit.png",
+            "type": "builtin",
+            "action": "quit" 
+        }
+    ]
+}
