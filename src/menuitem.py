@@ -4,6 +4,8 @@ from PyQt5.QtCore import QUrl
 import importlib.util
 import inspect
 import os
+from threading import Thread, Timer
+import time
 
 class MenuItem:
     def __init__(self, parent, title=None, icon=None, type=None, action=None, options=None):
@@ -48,9 +50,23 @@ class MenuItem:
                 if inspect.isclass(getattr(plugin, name_local)):
                     Class = getattr(plugin, name_local)
                     plugin_object = Class(self)
+                    if self.options:
+                        if "repeat" in self.options:
+                            thread = Thread(target=self.background_task, args=(plugin_object,self.options["repeat"]), daemon=True)
+                            thread.start()
+                    
                     self.action_item.triggered.connect(lambda: plugin_object.onClick())
         except ModuleNotFoundError:
             print("Script not found")
             self.change_title("Could not load script: " + self.action)
             self.action_item.setEnabled(False)
-        
+    
+
+    def background_task(self, plugin, interval):
+        while True:
+            try:
+                plugin.onLoop()
+                time.sleep(interval)
+            except AttributeError:
+                print("No onLoop found in plugin: " + str(plugin))
+                break
