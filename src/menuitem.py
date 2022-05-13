@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QAction, QApplication
 from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5.QtCore import QUrl
+import importlib
+import inspect
 
 class MenuItem:
     def __init__(self, parent, title=None, icon=None, type=None, action=None):
@@ -14,16 +16,36 @@ class MenuItem:
         if type != "separator":
             self.action_item = QAction(QIcon(self.icon), self.title, self.parent)
             print(self.action)
-            self.action_item.triggered.connect(lambda: self.parse_action())
+            self.parse_action()
         elif type == "separator":
             parent.addSeparator()
 
     def get_action(self):
         return self.action_item
 
+    def change_title(self, name):
+        self.title = name
+        self.action_item.setText(name)
+
     def parse_action(self):
         if self.type == "builtin":
             if self.action == "quit":
-                return QApplication.instance().quit()
+                self.action_item.triggered.connect(lambda: QApplication.instance().quit())
         elif self.type == "link":
-            return QDesktopServices.openUrl(QUrl(self.action))
+            self.action_item.triggered.connect(lambda: QDesktopServices.openUrl(QUrl(self.action)))
+        elif self.type == "script":
+            return self.call_script()
+
+    def call_script(self):
+        try: 
+            plugin = importlib.import_module(self.action, ".")
+            for name_local in dir(plugin):
+                if inspect.isclass(getattr(plugin, name_local)):
+                    Class = getattr(plugin, name_local)
+                    plugin_object = Class(self)
+                    self.action_item.triggered.connect(lambda: plugin_object.onClick())
+        except ModuleNotFoundError:
+            print("Script not found")
+            self.change_title("Could not load script: " + self.action)
+            self.action_item.setEnabled(False)
+        
