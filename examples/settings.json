@@ -9,6 +9,14 @@
             "action": "https://google.com"
         },
         {
+            "title": "Internet connection",
+            "type": "script",
+            "action": "check_internet",
+            "options": {
+                "repeat": 60
+            }
+        },
+        {
             "title": "Run script",
             "type": "script",
             "action": "version"
