@@ -9,6 +9,19 @@ class Config:
         except OSError:
             print("Failed to open settings.json")
             sys.exit()
+    
+    def get_mode(self):
+        if "mode" in self.raw_config:
+            if self.raw_config["mode"] == "tray":
+                return "tray"
+            elif self.raw_config["mode"] == "window":
+                return "window"
+            else:
+                print("Unknown mode, defaulting to tray")
+                return "tray"
+        else:
+            print("No mode set, defaulting to tray")
+            return "tray"
 
     def get_item(self, item, parent=None):
         if parent is None:
