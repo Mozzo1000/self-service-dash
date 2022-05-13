@@ -32,6 +32,9 @@ class MenuItem:
         self.title = name
         self.action_item.setText(name)
 
+    def set_tooltip(self, name):
+        self.action_item.setToolTip(name)
+
     def parse_action(self):
         if self.type == "builtin":
             if self.action == "quit":
@@ -61,7 +64,6 @@ class MenuItem:
             self.change_title("Could not load script: " + self.action)
             self.action_item.setEnabled(False)
     
-
     def background_task(self, plugin, interval):
         while True:
             try:
