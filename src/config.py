@@ -1,13 +1,15 @@
 import json
 import sys
+import os
 
 class Config:
-    def __init__(self):
+    def __init__(self, config_file="../examples/settings.json"):
+        os.chdir(os.path.dirname(os.path.realpath(config_file)))
         try:
-            with open("settings.json", "r") as f:
+            with open(config_file, "r") as f:
                 self.raw_config = json.load(f)
         except OSError:
-            print("Failed to open settings.json")
+            print(f"Failed to open {config_file}")
             sys.exit()
     
     def get_mode(self):
