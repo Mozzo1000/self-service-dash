@@ -6,13 +6,15 @@ import inspect
 import os
 
 class MenuItem:
-    def __init__(self, parent, title=None, icon=None, type=None, action=None):
+    def __init__(self, parent, title=None, icon=None, type=None, action=None, options=None):
         self.parent = parent
         self.title = title
         self.icon = icon
         self.type = type
         self.action = action
+        self.options = options
         self.action_item = None
+        print(options)
 
         if type != "separator":
             self.action_item = QAction(QIcon(self.icon), self.title, self.parent)

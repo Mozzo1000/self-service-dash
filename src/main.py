@@ -24,7 +24,8 @@ class App:
                                     title=self.config.get_item("title", parent=item),
                                     icon=self.config.get_item("icon", parent=item),
                                     type=self.config.get_item("type", parent=item),
-                                    action=self.config.get_item("action", parent=item))
+                                    action=self.config.get_item("action", parent=item),
+                                    options=self.config.get_item("options", parent=item))
                 menu.addAction(menu_it.get_action())
 
             self.tray = QSystemTrayIcon()
