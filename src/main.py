@@ -17,6 +17,7 @@ class App:
 
             icon = QIcon(self.config.get_item("icon"))
             menu = QMenu()
+            menu.setToolTipsVisible(True)
 
             for item in self.config.get_item("menu"):
                 menu_it = MenuItem(parent=menu,
