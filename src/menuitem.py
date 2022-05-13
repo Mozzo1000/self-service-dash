@@ -1,8 +1,9 @@
 from PyQt5.QtWidgets import QAction, QApplication
 from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5.QtCore import QUrl
-import importlib
+import importlib.util
 import inspect
+import os
 
 class MenuItem:
     def __init__(self, parent, title=None, icon=None, type=None, action=None):
@@ -37,15 +38,18 @@ class MenuItem:
             return self.call_script()
 
     def call_script(self):
-        try: 
-            plugin = importlib.import_module(self.action, ".")
-            for name_local in dir(plugin):
-                if inspect.isclass(getattr(plugin, name_local)):
-                    Class = getattr(plugin, name_local)
-                    plugin_object = Class(self)
-                    self.action_item.triggered.connect(lambda: plugin_object.onClick())
-        except ModuleNotFoundError:
-            print("Script not found")
-            self.change_title("Could not load script: " + self.action)
-            self.action_item.setEnabled(False)
+       # try: 
+        print(os.getcwd())
+        spec = importlib.util.spec_from_file_location(self.action, os.path.join(os.getcwd(), self.action + ".py"))
+        plugin = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(plugin)
+        for name_local in dir(plugin):
+            if inspect.isclass(getattr(plugin, name_local)):
+                Class = getattr(plugin, name_local)
+                plugin_object = Class(self)
+                self.action_item.triggered.connect(lambda: plugin_object.onClick())
+        #except ModuleNotFoundError:
+        #    print("Script not found")
+        #    self.change_title("Could not load script: " + self.action)
+        #    self.action_item.setEnabled(False)
         
