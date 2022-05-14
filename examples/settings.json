@@ -1,6 +1,6 @@
 {
     "title": "Self service dash",
-    "icon": "icon.png",
+    "icon": "icons/icon.png",
     "mode": "tray",
     "menu": [
         {
@@ -30,7 +30,7 @@
         },
         {
             "title": "Quit",
-            "icon": "exit.png",
+            "icon": "icons/exit.png",
             "type": "builtin",
             "action": "quit" 
         }
