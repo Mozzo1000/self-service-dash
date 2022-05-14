@@ -16,11 +16,9 @@ class MenuItem:
         self.action = action
         self.options = options
         self.action_item = None
-        print(options)
 
         if type != "separator":
             self.action_item = QAction(QIcon(self.icon), self.title, self.parent)
-            print(self.action)
             self.parse_action()
         elif type == "separator":
             parent.addSeparator()

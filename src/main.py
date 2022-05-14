@@ -12,9 +12,6 @@ class App:
         self.config = Config()
 
         if self.config.get_mode() == "tray":
-            #print(self.config.raw_config)
-            #print(self.config.raw_config["menu"][0])
-
             icon = QIcon(self.config.get_item("icon"))
             menu = QMenu()
             menu.setToolTipsVisible(True)

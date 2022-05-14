@@ -31,5 +31,5 @@ class Config:
         if item in parent:
             return parent[item]
         else:
-            print(f"Key {item} does not exist in json file")
+            print(f"Key {item} does not exist in json file.")
             return None
