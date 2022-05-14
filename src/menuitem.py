@@ -24,6 +24,8 @@ class MenuItem:
             self.parse_action()
         elif type == "separator":
             parent.addSeparator()
+        elif type == "text":
+            parent.addSection(icon, title)
 
     def get_action(self):
         return self.action_item
