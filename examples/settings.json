@@ -17,6 +17,10 @@
             }
         },
         {
+            "title": "This is a text item",
+            "type": "text"
+        },
+        {
             "title": "Run script",
             "type": "script",
             "action": "version"
