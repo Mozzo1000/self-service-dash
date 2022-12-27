@@ -1,10 +1,10 @@
 from PyQt5.QtWidgets import QAction, QApplication
 from PyQt5.QtGui import QIcon, QDesktopServices
-from PyQt5.QtCore import QUrl, QProcess
+from PyQt5.QtCore import QUrl
 import importlib.util
 import inspect
 import os
-from threading import Thread, Timer
+from threading import Thread
 import time
 import subprocess
 
@@ -19,14 +19,12 @@ class MenuItem:
         self.options = options
         self.action_item = None
 
-        if type != "separator":
+        if type == "separator":
+            parent.addSeparator()
+        else:
             self.action_item = QAction(
                 QIcon(self.icon), self.title, self.parent)
             self.parse_action()
-        elif type == "separator":
-            parent.addSeparator()
-        elif type == "text":
-            parent.addSection(icon, title)
 
     def get_action(self):
         return self.action_item
@@ -50,6 +48,8 @@ class MenuItem:
             return self.call_script()
         elif self.type == "application":
             return self.run_app()
+        elif self.type == "text":
+            self.action_item.setEnabled(False)
 
     def run_app(self):
         self.action_item.triggered.connect(
