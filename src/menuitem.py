@@ -48,8 +48,10 @@ class MenuItem:
             return self.call_script()
         elif self.type == "application":
             return self.run_app()
-        elif self.type == "text":
+        elif self.type.startswith("text"):
             self.action_item.setEnabled(False)
+            if self.type == "text:enabled":
+                self.action_item.setEnabled(True)
 
     def run_app(self):
         self.action_item.triggered.connect(
