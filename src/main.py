@@ -1,8 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QMenu, QSystemTrayIcon
-from PyQt5.QtGui import QIcon, QDesktopServices, QCursor
-from PyQt5.QtCore import QUrl
+from PyQt5.QtGui import QIcon, QCursor
 import sys
-import json
 from config import Config
 from menuitem import MenuItem
 
