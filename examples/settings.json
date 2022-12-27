@@ -21,6 +21,10 @@
             "type": "text"
         },
         {
+            "title": "This is a enabled text item",
+            "type": "text:enabled"
+        },
+        {
             "title": "Run script",
             "type": "script",
             "action": "version"
@@ -32,7 +36,7 @@
             "title": "Quit",
             "icon": "icons/exit.png",
             "type": "builtin",
-            "action": "quit" 
+            "action": "quit"
         }
     ]
 }
