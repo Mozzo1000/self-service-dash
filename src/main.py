@@ -31,7 +31,7 @@ class App:
                 self.menu.addAction(menu_it.get_action())
 
             self.tray = QSystemTrayIcon()
-            # self.tray.activated.connect(self.showMenuOnTrigger)
+            self.tray.activated.connect(self.showMenuOnTrigger)
             self.tray.setToolTip(self.config.get_item("title"))
             self.tray.setIcon(icon)
             self.tray.setContextMenu(self.menu)
