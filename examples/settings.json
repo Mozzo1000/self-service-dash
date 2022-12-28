@@ -1,6 +1,7 @@
 {
     "title": "Self service dash",
     "icon": "icons/icon.png",
+    "notification_overlay": "icons/icon_notification_overlay.png",
     "mode": "tray",
     "menu": [
         {
@@ -28,6 +29,11 @@
             "title": "Run script",
             "type": "script",
             "action": "version"
+        },
+        {
+            "title": "Test notification",
+            "type": "script",
+            "action": "notification"
         },
         {
             "type": "separator"
