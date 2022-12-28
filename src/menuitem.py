@@ -22,6 +22,24 @@ class MenuItem:
 
         if type == "separator":
             parent.addSeparator()
+        elif type == "submenu":
+            sub_menu = self.parent.addMenu(self.title)
+            for item in self.app.config.get_item("menu"):
+                menu_list = self.app.config.get_item("menu_list", parent=item)
+                if menu_list:
+                    for i in menu_list:
+                        sub_menu.addAction(MenuItem(app=self.app, parent=self.parent,
+                                            title=self.app.config.get_item(
+                                                "title", parent=i),
+                                            icon=self.app.config.get_item(
+                                                "icon", parent=i),
+                                            type=self.app.config.get_item(
+                                                "type", parent=i),
+                                            action=self.app.config.get_item(
+                                                "action", parent=i),
+                                            options=self.app.config.get_item("options", parent=i)).get_action())
+                        
+
         else:
             self.action_item = QAction(
                 QIcon(self.icon), self.title, self.parent)
@@ -52,7 +70,7 @@ class MenuItem:
         elif self.type.startswith("text"):
             self.action_item.setEnabled(False)
             if self.type == "text:enabled":
-                self.action_item.setEnabled(True)
+                self.action_item.setEnabled(True)            
 
     def run_app(self):
         self.action_item.triggered.connect(
