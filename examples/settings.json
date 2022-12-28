@@ -39,6 +39,21 @@
             "type": "separator"
         },
         {
+            "title": "Submenu",
+            "type": "submenu",
+            "menu_list": [
+                {
+                    "title": "Test1",
+                    "type": "text"
+                },
+                {
+                    "title": "Test notification",
+                    "type": "script",
+                    "action": "notification"
+                }
+            ]
+        },
+        {
             "title": "Quit",
             "icon": "icons/exit.png",
             "type": "builtin",
