@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QAction, QApplication
-from PyQt5.QtGui import QIcon, QDesktopServices
+from PyQt5.QtGui import QIcon, QDesktopServices, QImage, QPainter, QPixmap
 from PyQt5.QtCore import QUrl
 import importlib.util
 import inspect
@@ -10,7 +10,8 @@ import subprocess
 
 
 class MenuItem:
-    def __init__(self, parent, title=None, icon=None, type=None, action=None, options=None):
+    def __init__(self, app, parent, title=None, icon=None, type=None, action=None, options=None):
+        self.app = app
         self.parent = parent
         self.title = title
         self.icon = icon
@@ -88,3 +89,19 @@ class MenuItem:
             except AttributeError:
                 print("No onLoop found in plugin: " + str(plugin))
                 break
+    
+    def set_notification_pending(self, state=True):
+        self.app.notification_state = state
+        if state:
+            overlay = QImage(self.app.config.get_item("notification_overlay"))
+            painter = QPainter()
+            painter.begin(self.app.icon)
+            painter.drawImage(0, int(self.app.icon.height() - overlay.height()), overlay)
+            painter.end()
+            self.app.tray.setIcon(QIcon(QPixmap.fromImage(self.app.icon)))
+        else:
+            self.app.icon = QImage(self.app.config.get_item("icon"))
+            self.app.tray.setIcon(QIcon(QPixmap.fromImage(self.app.icon)))
+    
+    def get_notification_state(self):
+        return self.app.notification_state
